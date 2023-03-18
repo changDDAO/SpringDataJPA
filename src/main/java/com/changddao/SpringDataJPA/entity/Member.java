@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "userName", "age"})
+@ToString(of = {"id", "username", "age"})
 public class Member {
     @Id
     @GeneratedValue

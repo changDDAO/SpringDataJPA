@@ -125,4 +125,21 @@ class MemberRepositoryTest {
 
 
     }
+
+    @Test
+    public void findByNames() {
+        Member member1 = new Member("changho", 29);
+        Member member2 = new Member("jina", 29);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<String> usernames = memberRepository.usernameList();
+
+        List<Member> bynames = memberRepository.findBynames(usernames);
+        for (Member byname : bynames) {
+            System.out.println("byname = " + byname);
+        }
+    }
+
 }
