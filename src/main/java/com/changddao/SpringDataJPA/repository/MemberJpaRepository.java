@@ -42,7 +42,7 @@ public class MemberJpaRepository {
     }
 
     public List<Member> findByUsernameAndAgeGreaterThen(String username, int age) {
-        return em.createQuery("select m from Member m where m.userName = :username and m.age > :age")
+        return em.createQuery("select m from Member m where m.username  = :username and m.age > :age")
                 .setParameter("username", username)
                 .setParameter("age", age)
                 .getResultList();
@@ -60,6 +60,13 @@ public class MemberJpaRepository {
         return em.createQuery("select count(m) from Member m where m.age = :age",Long.class)
                 .setParameter("age",age)
                 .getSingleResult();
+    }
+
+    public int bulkAgePlus(int age) {
+        return em.createQuery("update Member m set m.age = m.age+1 where m.age >= :age")
+                .setParameter("age", age)
+                .executeUpdate();
+
     }
 
 
