@@ -1,8 +1,11 @@
 package com.changddao.SpringDataJPA.controller;
 
+import com.changddao.SpringDataJPA.dto.MemberDto;
 import com.changddao.SpringDataJPA.entity.Member;
 import com.changddao.SpringDataJPA.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +29,16 @@ public class MemberController {
     }
     @PostConstruct
     public void init() {
-        memberRepository.save(new Member("changHo"));
+        for (int i = 0; i < 100; i++) {
+            memberRepository.save(new Member("user" + (i + 1), i));
+        }
 
+    }
+
+    @GetMapping("/members")
+    public Page<MemberDto> list(Pageable pageable) {
+        Page<Member> page = memberRepository.findAll(pageable);
+        Page<MemberDto> map = page.map(member -> new MemberDto(member.getId(), member.getUsername(), null));
+        return map;
     }
 }
